@@ -135,7 +135,7 @@ To add a local dependency to the correct Flow version to a Create React Native A
 1. Find the Flow `[version]` at the bottom of the included [.flowconfig](.flowconfig)
 2. Run `npm install --save-dev flow-bin@x.y.z` (or `yarn add --dev flow-bin@x.y.z`), where `x.y.z` is the .flowconfig version number.
 3. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-4. Add `// @flow` to any files you want to type check (for example, to `App.js`).
+4. Add `// @flow` to any files you want to type check (for example, to `App.js.bak`).
 
 Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
 You can optionally use a [plugin for your IDE or editor](https://flow.org/en/docs/editors/) for a better integrated experience.

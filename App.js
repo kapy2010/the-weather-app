@@ -1,59 +1,37 @@
-import React from 'react';
-import {StyleSheet, Text, View, ListView, TouchableOpacity} from 'react-native';
-import Input from "./src/components/Input";
-import {Card} from "./src/components/Card";
-import {CardSection} from "./src/components/CardSection";
-import Button from "./src/components/Button";
+import React, {Component} from 'react';
+import {Container, Header, Body, Left, Right, Title, Content, Text, Item, Icon, Button} from 'native-base';
+import CitySearch from './src/components/CitySearch';
 
-var cities = ['oslo', 'new york', 'london', 'new delhi', 'chennai', 'bergen', 'los angelos', 'san francisco', 'san jose'];
-
-var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-export default class App extends React.Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchedCities: [],
-      selectedCity: ''
+      displaySearch: false
     };
+    this._toggleSearch = this._toggleSearch.bind(this);
   }
 
-  onChangeText = (searchText) => {
-    let searchCities = searchText ? cities.filter(city =>
-      city.startsWith(searchText.toLowerCase()) || city.includes(searchText.toLowerCase())) : [];
-
-    this.setState({
-      searchedCities: searchCities
-    });
+  _toggleSearch() {
+    this.setState({displaySearch: !this.state.displaySearch});
   };
 
-  renderCity = (city) => {
-    return (
-      <View>
-        <TouchableOpacity onPress={this.setState({selectedCity: city})}><Text>{city.toUpperCase()}</Text></TouchableOpacity>
-      </View>
-    );
-  }
-
   render() {
+    let searchBar = this.state.displaySearch ? <CitySearch/> : null;
     return (
-      <Card>
-        <CardSection>
-          <Input
-            placeholder='Search city'
-            onChangeText={this.onChangeText}
-            value={this.state.selectedCity}
-          />
-        </CardSection>
-
-        <CardSection>
-          <ListView
-            dataSource={ds.cloneWithRows(this.state.searchedCities)}
-            renderRow={this.renderCity}
-            enableEmptySections={true}
-          />
-        </CardSection>
-      </Card>
+      <Container>
+        <Header>
+          <Left/>
+          <Body>
+            <Title>Weather App</Title>
+          </Body>
+          <Right>
+            <Button onPress={this._toggleSearch} transparent>
+              <Icon name="search" />
+            </Button>
+          </Right>
+        </Header>
+        {searchBar}
+      </Container>
     );
   }
 }
