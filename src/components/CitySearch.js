@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Content, Item, Icon, Input, List, ListItem, Text} from 'native-base';
+import {TouchableOpacity} from 'react-native';
 
 var cities = ['oslo', 'new york', 'london', 'new delhi', 'chennai', 'bergen', 'los angelos', 'san francisco', 'san jose'];
 
@@ -22,6 +23,12 @@ class CitySearch extends React.Component {
     let list = searchCities.map(city => <ListItem>{city}</ListItem>);
   };
 
+  _selectCity(city) {
+    this.setState({
+      selectedCity: city
+    }, this.props.setCity(city), this.props.toggleSearch());
+  }
+
   _titleCase(str) {
     var splitStr = str.toLowerCase().split(' ');
     for (var i = 0; i < splitStr.length; i++) {
@@ -35,7 +42,13 @@ class CitySearch extends React.Component {
 
   render() {
     let listOfCities = this.state.searchedCities.map(
-      city => <ListItem key={city}><Text key={city}>{this._titleCase(city)}</Text></ListItem>
+      city => <ListItem key={city}>
+                <TouchableOpacity onPress={() => this._selectCity(city)}>
+                  <Text key={city}>
+                    {this._titleCase(city)}
+                  </Text>
+                </TouchableOpacity>
+              </ListItem>
     );
     return(
       <Content searchbar>
